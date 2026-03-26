@@ -9,6 +9,15 @@
   <link rel="alternate icon" href="/favicon.svg" type="image/svg+xml">
   <title>Richard Alvin - Resume</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <script>
+    (() => {
+      const storedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
     html {
@@ -144,17 +153,33 @@
 
     /* Hero gradient text */
     .gradient-name {
-      background: linear-gradient(135deg, #1c1c1c 0%, #059669 60%, #0ea5e9 100%);
+      color: #18181b;
+      background: linear-gradient(135deg, #18181b 0%, #047857 55%, #0284c7 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
     .dark .gradient-name {
-      background: linear-gradient(135deg, #f4f4f5 0%, #34d399 60%, #38bdf8 100%);
+      color: #f4f4f5;
+      background: linear-gradient(135deg, #fafafa 0%, #6ee7b7 55%, #7dd3fc 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+    }
+
+    @media (max-width: 640px) {
+      .gradient-name {
+        background: none;
+        color: #f4f4f5;
+        -webkit-text-fill-color: currentColor;
+        text-shadow: 0 0 24px rgba(52, 211, 153, 0.14);
+      }
+
+      html:not(.dark) .gradient-name {
+        color: #18181b;
+        text-shadow: none;
+      }
     }
 
     /* Toast */
