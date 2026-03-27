@@ -9,19 +9,54 @@
   <link rel="alternate icon" href="/favicon.svg" type="image/svg+xml">
   <title>Richard Alvin - Resume</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <!-- FIX #1: Script anti-flash di <head> hanya set class, TIDAK menyentuh tombol -->
   <script>
-    (() => {
-      const storedTheme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    (function () {
+      var storedTheme = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
         document.documentElement.classList.add('dark');
       }
     })();
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
     html {
       font-family: 'DM Sans', system-ui, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(16, 185, 129, 0.08), transparent 34%),
+        linear-gradient(180deg, #fafaf9 0%, #f5f5f4 100%);
+      color-scheme: light;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    html.dark {
+      background:
+        radial-gradient(circle at top, rgba(16, 185, 129, 0.16), transparent 34%),
+        linear-gradient(180deg, #09090b 0%, #111827 100%);
+      color-scheme: dark;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    .theme-option {
+      transition: all 0.25s ease;
+    }
+
+    .theme-option.active {
+      background: #18181b;
+      color: #fafafa;
+      box-shadow: 0 8px 20px rgba(24, 24, 27, 0.18);
+    }
+
+    .dark .theme-option.active {
+      background: #fafafa;
+      color: #111827;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
     }
 
     /* Scroll reveal */
@@ -239,34 +274,21 @@
             class="nav-link text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Certifications</a>
           <a href="#contact"
             class="nav-link text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Contact</a>
-
-          <!-- Dark mode toggle -->
-          <button id="theme-toggle" aria-label="Toggle dark mode"
-            class="w-9 h-9 flex items-center justify-center rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all">
-            <svg id="icon-sun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 110 8 4 4 0 010-8z" />
-            </svg>
-            <svg id="icon-moon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-          </button>
         </div>
 
         <!-- Mobile right side -->
         <div class="flex md:hidden items-center gap-3">
-          <button id="theme-toggle-mobile" aria-label="Toggle dark mode"
-            class="w-9 h-9 flex items-center justify-center rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all">
-            <svg id="icon-sun-m" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 110 8 4 4 0 010-8z" />
-            </svg>
-            <svg id="icon-moon-m" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-          </button>
+          <div
+            class="flex items-center gap-1 rounded-xl border border-zinc-200/80 dark:border-zinc-700/80 bg-white/80 dark:bg-zinc-900/80 p-1 shadow-sm">
+            <button type="button" data-theme="light" aria-label="Switch to light mode"
+              class="theme-option px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100">
+              Light
+            </button>
+            <button type="button" data-theme="dark" aria-label="Switch to dark mode"
+              class="theme-option px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100">
+              Dark
+            </button>
+          </div>
           <button id="menu-btn" aria-label="Toggle menu"
             class="w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all">
             <span class="w-5 h-px bg-zinc-700 dark:bg-zinc-300 transition-all" id="bar1"></span>
@@ -641,25 +663,10 @@
         <!-- Project 1: Absensiku -->
         <div
           class="project-card reveal reveal-delay-1 flex flex-col rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
-          <!-- Mock visual -->
           <div
-            class="h-44 bg-gradient-to-br from-sky-100 to-emerald-100 dark:from-sky-950 dark:to-emerald-950 relative overflow-hidden flex items-center justify-center p-6">
-            <div
-              class="w-24 bg-white dark:bg-zinc-800 rounded-2xl shadow-xl p-3 flex flex-col gap-2 border border-zinc-100 dark:border-zinc-700">
-              <div class="h-2 w-12 rounded-full bg-emerald-400"></div>
-              <div class="h-1.5 w-16 rounded-full bg-zinc-200 dark:bg-zinc-600"></div>
-              <div class="h-1.5 w-10 rounded-full bg-zinc-200 dark:bg-zinc-600"></div>
-              <div class="mt-1 h-8 rounded-xl bg-emerald-500 flex items-center justify-center">
-                <div class="h-1.5 w-10 rounded-full bg-white"></div>
-              </div>
-            </div>
-            <div
-              class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/60 dark:bg-zinc-800/60 flex items-center justify-center">
-              <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
+            class="h-44 bg-gradient-to-br from-sky-100 to-emerald-100 dark:from-sky-950 dark:to-emerald-950 relative overflow-hidden">
+            <img src="./src/images/absensiku_pic.png" alt="Absensiku app preview"
+              class="h-full w-full object-cover object-center" />
           </div>
           <div class="flex flex-col flex-1 p-6">
             <span class="font-mono text-xs text-sky-600 dark:text-sky-400 mb-2">Flutter Portfolio Project</span>
@@ -683,7 +690,6 @@
         <!-- Project 2: CEH CTF -->
         <div
           class="project-card reveal reveal-delay-2 flex flex-col rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
-          <!-- Mock visual -->
           <div
             class="h-44 bg-gradient-to-br from-zinc-800 to-zinc-900 dark:from-zinc-900 dark:to-black relative overflow-hidden flex items-center justify-center p-6">
             <div class="font-mono text-xs text-emerald-400 text-left space-y-1.5">
@@ -716,10 +722,8 @@
         <!-- Project 3: CompTIA Network+ -->
         <div
           class="project-card reveal reveal-delay-3 flex flex-col rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
-          <!-- Mock visual -->
           <div
             class="h-44 bg-gradient-to-br from-violet-50 to-sky-100 dark:from-violet-950 dark:to-sky-950 relative overflow-hidden flex items-center justify-center p-6">
-            <!-- Network diagram mockup -->
             <svg class="w-full h-full max-w-[160px]" viewBox="0 0 160 100">
               <rect x="65" y="5" width="30" height="18" rx="3" fill="#7c3aed" opacity="0.7" />
               <text x="80" y="18" text-anchor="middle" fill="white" font-size="7" font-family="monospace">Router</text>
@@ -978,81 +982,157 @@
     </div>
   </footer>
 
-  <script type="module">
-    // ── Theme ──
-    const html = document.documentElement;
-    const setTheme = (dark) => {
-      dark ? html.classList.add('dark') : html.classList.remove('dark');
-      localStorage.setItem('theme', dark ? 'dark' : 'light');
-      ['icon-sun', 'icon-sun-m'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.toggle('hidden', !dark); });
-      ['icon-moon', 'icon-moon-m'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.toggle('hidden', dark); });
-    };
-    const isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    setTheme(isDark);
-    document.getElementById('theme-toggle').addEventListener('click', () => setTheme(!html.classList.contains('dark')));
-    document.getElementById('theme-toggle-mobile').addEventListener('click', () => setTheme(!html.classList.contains('dark')));
+  <!--
+    FIX UTAMA:
+    1. Hapus type="module" → script berjalan langsung, tidak deferred
+    2. Ganti data-theme-option → data-theme (konsisten)
+    3. Selector tombol menggunakan [data-theme] yang ada di SEMUA tombol (desktop + mobile)
+    4. Clipboard dengan fallback execCommand untuk file:// / HTTP
+    5. Script diletakkan sebelum </body> → semua DOM sudah siap
+  -->
+  <script>
+    // ── Theme ──────────────────────────────────────────────────────────────────
+    var html = document.documentElement;
+    var themeButtons = document.querySelectorAll('[data-theme]');
 
-    // ── Mobile menu ──
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    let menuOpen = false;
-    menuBtn.addEventListener('click', () => {
+    function setTheme(theme) {
+      var isDark = theme === 'dark';
+      html.classList.toggle('dark', isDark);
+      localStorage.setItem('theme', theme);
+
+      // Update semua tombol (desktop + mobile sekaligus)
+      themeButtons.forEach(function (btn) {
+        var isActive = btn.getAttribute('data-theme') === theme;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    // Inisialisasi tema saat halaman load
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(saved ? saved : (prefersDark ? 'dark' : 'light'));
+    })();
+
+    // Pasang event listener ke semua tombol tema
+    themeButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setTheme(btn.getAttribute('data-theme'));
+      });
+    });
+
+    // ── Mobile menu ────────────────────────────────────────────────────────────
+    var menuBtn = document.getElementById('menu-btn');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var bar1 = document.getElementById('bar1');
+    var bar2 = document.getElementById('bar2');
+    var bar3 = document.getElementById('bar3');
+    var menuOpen = false;
+
+    menuBtn.addEventListener('click', function () {
       menuOpen = !menuOpen;
       mobileMenu.classList.toggle('open', menuOpen);
-      document.getElementById('bar3').style.width = menuOpen ? '20px' : '14px';
-      document.getElementById('bar1').style.transform = menuOpen ? 'rotate(45deg) translateY(8px)' : '';
-      document.getElementById('bar2').style.opacity = menuOpen ? '0' : '1';
-      document.getElementById('bar3').style.transform = menuOpen ? 'rotate(-45deg) translateY(-8px)' : '';
+      bar3.style.width = menuOpen ? '20px' : '14px';
+      bar1.style.transform = menuOpen ? 'rotate(45deg) translateY(8px)' : '';
+      bar2.style.opacity = menuOpen ? '0' : '1';
+      bar3.style.transform = menuOpen ? 'rotate(-45deg) translateY(-8px)' : '';
     });
-    document.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', () => {
-      menuOpen = false;
-      mobileMenu.classList.remove('open');
-      document.getElementById('bar3').style.width = '14px';
-      document.getElementById('bar1').style.transform = '';
-      document.getElementById('bar2').style.opacity = '1';
-      document.getElementById('bar3').style.transform = '';
-    }));
 
-    // ── Smooth scroll ──
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
+      link.addEventListener('click', function () {
+        menuOpen = false;
+        mobileMenu.classList.remove('open');
+        bar3.style.width = '14px';
+        bar1.style.transform = '';
+        bar2.style.opacity = '1';
+        bar3.style.transform = '';
       });
     });
 
-    // ── Active nav on scroll ──
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const onScroll = () => {
-      let cur = '';
-      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
-      navLinks.forEach(l => {
-        l.classList.toggle('active', l.getAttribute('href') === '#' + cur);
+    // ── Smooth scroll ──────────────────────────────────────────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        var target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
       });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    });
 
-    // ── Navbar shadow on scroll ──
-    window.addEventListener('scroll', () => {
-      document.getElementById('navbar').style.boxShadow = window.scrollY > 10 ? '0 1px 0 0 rgba(0,0,0,0.06)' : '';
+    // ── Active nav on scroll ───────────────────────────────────────────────────
+    var sections = document.querySelectorAll('section[id]');
+    var navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', function () {
+      var cur = '';
+      sections.forEach(function (s) {
+        if (window.scrollY >= s.offsetTop - 100) cur = s.id;
+      });
+      navLinks.forEach(function (link) {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + cur);
+      });
     }, { passive: true });
 
-    // ── Copy email ──
-    document.getElementById('copy-email-btn').addEventListener('click', () => {
-      navigator.clipboard.writeText('richardalvin21a@gmail.com').then(() => {
-        const toast = document.getElementById('toast');
-        toast.style.opacity = '1';
-        toast.style.pointerEvents = 'auto';
-        setTimeout(() => { toast.style.opacity = '0'; toast.style.pointerEvents = 'none'; }, 2500);
-      });
+    // ── Navbar shadow on scroll ────────────────────────────────────────────────
+    window.addEventListener('scroll', function () {
+      document.getElementById('navbar').style.boxShadow =
+        window.scrollY > 10 ? '0 1px 0 0 rgba(0,0,0,0.06)' : '';
+    }, { passive: true });
+
+    // ── Copy email dengan fallback (works di file:// dan HTTP) ─────────────────
+    function showToast() {
+      var toast = document.getElementById('toast');
+      toast.style.opacity = '1';
+      toast.style.pointerEvents = 'auto';
+      setTimeout(function () {
+        toast.style.opacity = '0';
+        toast.style.pointerEvents = 'none';
+      }, 2500);
+    }
+
+    function fallbackCopy(text) {
+      var el = document.createElement('textarea');
+      el.value = text;
+      el.style.position = 'fixed';
+      el.style.opacity = '0';
+      document.body.appendChild(el);
+      el.focus();
+      el.select();
+      try {
+        document.execCommand('copy');
+        showToast();
+      } catch (err) {
+        console.error('Copy failed:', err);
+      }
+      document.body.removeChild(el);
+    }
+
+    document.getElementById('copy-email-btn').addEventListener('click', function () {
+      var email = 'richardalvin21a@gmail.com';
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(email).then(showToast).catch(function () {
+          fallbackCopy(email);
+        });
+      } else {
+        fallbackCopy(email);
+      }
     });
 
-    // ── Scroll reveal ──
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    // ── Scroll reveal ──────────────────────────────────────────────────────────
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      revealObserver.observe(el);
+    });
   </script>
 
 </body>
